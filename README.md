@@ -44,8 +44,7 @@ pt.admin
 /pt コマンドを使うために必要
 
 ## License
+https://github.com/Be4rJP/PizzaTimeBukkit/blob/master/LICENSE
 
-
-
-## Download
-
+## Releases
+https://github.com/Be4rJP/PizzaTimeBukkit/releases
