@@ -1,0 +1,14 @@
+#LunaChatの/tellコマンドを乗っ取るかどうかの設定
+hijack-tell-commands: true
+
+#チャット情報受け取り用のサーバーポート
+receive-port: 28000
+
+#チャット情報送信先のサーバーとポート
+servers:
+  server1:
+    host: localhost
+    port: 28001
+  server2:
+    host: localhost
+    port: 28002

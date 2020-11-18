@@ -1,0 +1,15 @@
+name: PizzaTimeBukkit
+version: ${project.version}
+main: be4rjp.pizzatimebukkit.Main
+author: Be4rJP
+#--------------------------------------
+depend: [LunaChat, ProtocolLib]
+#--------------------------------------
+commands:
+  pt:
+    description: Type /pt help
+    usage: Type /pt help
+#--------------------------------------
+permissions:
+  pt.admin:
+    description: admin command.
