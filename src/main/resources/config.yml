@@ -1,6 +1,15 @@
 #LunaChatの/tellコマンドを乗っ取るかどうかの設定
 hijack-tell-commands: true
 
+#受け取ったコマンドをコンソールに出力するかどうかの設定
+show-commands: false
+
+#通常チャットのログをコンソールに表示するかどうかの設定
+show-chat-logs: true
+
+#個人チャットのログをコンソールに表示するかどうかの設定
+show-private-message-logs: true
+
 #チャット情報受け取り用のサーバーポート
 receive-port: 28000
 

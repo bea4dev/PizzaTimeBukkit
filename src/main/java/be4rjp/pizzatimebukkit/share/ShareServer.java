@@ -66,7 +66,8 @@ class EchoThread extends Thread {
             
             String command = reader.readLine();
             
-            System.out.println(command);
+            if(Main.config.getConfig().getBoolean("show-commands"))
+                Main.getPlugin().getLogger().info("Received -> " + command);
             
             String args[] = command.split(" ");
             
@@ -102,6 +103,8 @@ class EchoThread extends Thread {
                         try {
                             for (Player player : Main.getPlugin().getServer().getOnlinePlayers())
                                 player.sendMessage(chat);
+                            if(Main.config.getConfig().getBoolean("show-chat-logs"))
+                                Main.getPlugin().getLogger().info("->> " + chat);
                         }catch (Exception e){
                             writer.println(F);
                         }
@@ -116,6 +119,8 @@ class EchoThread extends Thread {
                             boolean success = false;
                             for (Player player : Main.getPlugin().getServer().getOnlinePlayers()) {
                                 if(player.getName().equals(args[2])){
+                                    if(Main.config.getConfig().getBoolean("show-private-message-logs"))
+                                        Main.getPlugin().getLogger().info("[" + args[1] + " -> " + args[2] + "] " + chat);
                                     player.sendMessage("§7[" + args[1] + " §f-> " + args[2] + "] " + chat);
                                     Main.replyMap.put(args[2], args[1]);
                                     writer.println(T);
