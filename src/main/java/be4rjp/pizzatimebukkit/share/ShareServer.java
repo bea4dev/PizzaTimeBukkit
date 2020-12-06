@@ -29,6 +29,11 @@ public class ShareServer extends Thread{
             while (true) {
                 Socket socket = sSocket.accept();
                 new EchoThread(socket).start();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }catch(Exception e){
             e.printStackTrace();
