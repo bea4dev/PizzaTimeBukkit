@@ -6,7 +6,7 @@
 
     <groupId>be4rjp</groupId>
     <artifactId>pizzatimebukkit</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>PizzaTimeBukkit</name>
@@ -61,6 +61,10 @@
             <id>dmulloy2-repo</id>
             <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -73,14 +77,14 @@
         <dependency>
             <groupId>com.github.ucchyocean</groupId>
             <artifactId>LunaChat</artifactId>
-            <version>3.0.15</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/target/lib/LunaChat.jar</systemPath>
+            <version>v3.0.16</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
             <version>4.5.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

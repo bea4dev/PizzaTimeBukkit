@@ -39,12 +39,12 @@ public class PTPacketListener {
                         event.setCancelled(true);
                         if(args.length >= 3) {
     
-                            String chat = Chat.toJapanize(player, message.replace(args[0] + " " + args[1] + " ", ""));
-                            
                             if(player.getName().equals(args[1])){
                                 player.sendMessage(Messages.errmsgCannotSendPMSelf());
                                 return;
                             }
+                            
+                            String chat = Chat.toJapanize(player, message.replace(args[0] + " " + args[1] + " ", ""));
                             
                             for(Player op : Main.getPlugin().getServer().getOnlinePlayers()){
                                 if(args[1].equals(op.getName())){
