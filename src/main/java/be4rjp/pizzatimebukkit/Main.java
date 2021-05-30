@@ -79,6 +79,7 @@ public final class Main extends JavaPlugin {
         
         //-------------------Chat share server and client--------------------
         ShareServer server = new ShareServer(config.getConfig().getInt("receive-port"));
+        server.setDaemon(true);
         server.start();
         //-------------------------------------------------------------------
     }
