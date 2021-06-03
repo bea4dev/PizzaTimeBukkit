@@ -1,6 +1,10 @@
 package be4rjp.pizzatimebukkit.share;
 
+import be4rjp.pizzatimebukkit.EventListener;
 import be4rjp.pizzatimebukkit.Main;
+import com.github.ucchyocean.lc3.LunaChatAPI;
+import com.github.ucchyocean.lc3.LunaChatBukkit;
+import com.github.ucchyocean.lc3.channel.Channel;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -137,6 +141,50 @@ class EchoThread extends Thread {
                         } catch (Exception e) {
                             writer.println(F);
                         }
+                    }
+                    break;
+                }
+                case "create": {
+                    if (args.length >= 2) {
+                        String channelName = command.replace(args[0] + " ", "");
+                        final Boolean[] success = {null};
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                EventListener.remoteCreateChannels.add(channelName);
+                                LunaChatAPI api = LunaChatBukkit.getInstance().getLunaChatAPI();
+                                Channel channel = api.createChannel(channelName);
+                                success[0] = channel != null;
+                            }
+                        }.runTask(Main.getPlugin());
+                        
+                        while (success[0] == null) {
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        
+                        if(success[0]) writer.println(T);
+                        else writer.println(F);
+                    }
+                    break;
+                }
+                case "cc": {
+                    if(args.length >= 3) {
+                        String chat = command.replace(args[0] + " " + args[1] + " ", "");
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                LunaChatAPI api = LunaChatBukkit.getInstance().getLunaChatAPI();
+                                Channel channel = api.getChannel(args[1]);
+                                if(channel != null){
+                                    channel.getMembers().forEach(channelMember -> channelMember.sendMessage(chat));
+                                }
+                            }
+                        }.runTask(Main.getPlugin());
+                        writer.println(T);
                     }
                     break;
                 }
