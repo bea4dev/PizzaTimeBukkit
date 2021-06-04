@@ -8,7 +8,10 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
+import com.github.ucchyocean.lc3.LunaChat;
 import com.github.ucchyocean.lc3.Messages;
+import com.github.ucchyocean.lc3.util.ClickableFormat;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -48,7 +51,11 @@ public class PTPacketListener {
                             
                             for(Player op : Main.getPlugin().getServer().getOnlinePlayers()){
                                 if(args[1].equals(op.getName())){
-                                    String m = "§7[" + player.getName() + " §f-> " + args[1] + "] " + chat;
+                                    String format = LunaChat.getPlugin().getLunaChatConfig().getDefaultFormatForPrivateMessage();
+                                    format = format.replace("%player", player.getName());
+                                    format = format.replace("%to", args[1]);
+                                    format = format.replace("%msg", chat);
+                                    String m = ChatColor.translateAlternateColorCodes('&', format);
                                     player.sendMessage(m);
                                     op.sendMessage(m);
                                     Main.replyMap.put(args[1], player.getName());
@@ -76,7 +83,12 @@ public class PTPacketListener {
                                     }
                                     else{
                                         Main.replyMap.put(args[1], player.getName());
-                                        player.sendMessage("§7[" + player.getName() + " §f-> " + args[1] + "] " + chat);
+                                        String format = LunaChat.getPlugin().getLunaChatConfig().getDefaultFormatForPrivateMessage();
+                                        format = format.replace("%player", player.getName());
+                                        format = format.replace("%to", args[1]);
+                                        format = format.replace("%msg", chat);
+                                        String m = ChatColor.translateAlternateColorCodes('&', format);
+                                        player.sendMessage(m);
                                     }
                                 }
                             };
@@ -101,7 +113,11 @@ public class PTPacketListener {
     
                             for(Player op : Main.getPlugin().getServer().getOnlinePlayers()){
                                 if(receiver.equals(op.getName())){
-                                    String m = "§7[" + player.getName() + " §f-> " + receiver + "] " + chat;
+                                    String format = LunaChat.getPlugin().getLunaChatConfig().getDefaultFormatForPrivateMessage();
+                                    format = format.replace("%player", player.getName());
+                                    format = format.replace("%to", args[1]);
+                                    format = format.replace("%msg", chat);
+                                    String m = ChatColor.translateAlternateColorCodes('&', format);
                                     player.sendMessage(m);
                                     op.sendMessage(m);
                                     Main.replyMap.put(receiver, player.getName());
@@ -129,7 +145,12 @@ public class PTPacketListener {
                                     }
                                     else{
                                         Main.replyMap.put(receiver, player.getName());
-                                        player.sendMessage("§7[" + player.getName() + " §f-> " + receiver + "] " + chat);
+                                        String format = LunaChat.getPlugin().getLunaChatConfig().getDefaultFormatForPrivateMessage();
+                                        format = format.replace("%player", player.getName());
+                                        format = format.replace("%to", args[1]);
+                                        format = format.replace("%msg", chat);
+                                        String m = ChatColor.translateAlternateColorCodes('&', format);
+                                        player.sendMessage(m);
                                     }
                                 }
                             };

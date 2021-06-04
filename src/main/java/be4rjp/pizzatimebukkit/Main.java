@@ -26,6 +26,8 @@ public final class Main extends JavaPlugin {
     //for ProtocolLib
     public static ProtocolManager protocolManager;
     
+    private ShareServer server;
+    
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -78,15 +80,15 @@ public final class Main extends JavaPlugin {
         
         
         //-------------------Chat share server and client--------------------
-        ShareServer server = new ShareServer(config.getConfig().getInt("receive-port"));
-        server.setDaemon(true);
-        server.start();
+        server = new ShareServer(config.getConfig().getInt("receive-port"));
+        server.runTaskAsynchronously(this);
         //-------------------------------------------------------------------
     }
     
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        server.close();
     }
     
     

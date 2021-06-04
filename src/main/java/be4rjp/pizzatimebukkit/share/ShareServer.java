@@ -2,9 +2,11 @@ package be4rjp.pizzatimebukkit.share;
 
 import be4rjp.pizzatimebukkit.EventListener;
 import be4rjp.pizzatimebukkit.Main;
+import com.github.ucchyocean.lc3.LunaChat;
 import com.github.ucchyocean.lc3.LunaChatAPI;
 import com.github.ucchyocean.lc3.LunaChatBukkit;
 import com.github.ucchyocean.lc3.channel.Channel;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -15,7 +17,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ShareServer extends Thread{
+public class ShareServer extends BukkitRunnable{
     private ServerSocket sSocket = null;
     
     private final int port;
@@ -24,6 +26,7 @@ public class ShareServer extends Thread{
         this.port = port;
     }
     
+    @Override
     public void run(){
         try{
             //ソケットを作成
@@ -32,7 +35,8 @@ public class ShareServer extends Thread{
             //クライアントからの要求待ち
             while (true) {
                 Socket socket = sSocket.accept();
-                new EchoThread(socket).start();
+                EchoThread echoThread = new EchoThread(socket);
+                echoThread.runTaskAsynchronously(Main.getPlugin());
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -50,11 +54,20 @@ public class ShareServer extends Thread{
             }
         }
     }
+    
+    public void close(){
+        try{
+            if (sSocket!=null)
+                sSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 
 //非同期スレッド
-class EchoThread extends Thread {
+class EchoThread extends BukkitRunnable {
     
     private Socket socket;
     
@@ -65,6 +78,7 @@ class EchoThread extends Thread {
         this.socket = socket;
     }
     
+    @Override
     public void run() {
         try {
             //クライアントからの受取用
@@ -130,7 +144,12 @@ class EchoThread extends Thread {
                                 if(player.getName().equals(args[2])){
                                     if(Main.config.getConfig().getBoolean("show-private-message-logs"))
                                         Main.getPlugin().getLogger().info("[" + args[1] + " -> " + args[2] + "] " + chat);
-                                    player.sendMessage("§7[" + args[1] + " §f-> " + args[2] + "] " + chat);
+                                    String format = LunaChat.getPlugin().getLunaChatConfig().getDefaultFormatForPrivateMessage();
+                                    format = format.replace("%player", args[1]);
+                                    format = format.replace("%to", args[2]);
+                                    format = format.replace("%msg", chat);
+                                    String m = ChatColor.translateAlternateColorCodes('&', format);
+                                    player.sendMessage(m);
                                     Main.replyMap.put(args[2], args[1]);
                                     writer.println(T);
                                     success = true;

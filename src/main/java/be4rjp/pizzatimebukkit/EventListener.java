@@ -104,11 +104,8 @@ public class EventListener implements Listener {
         String channelName = event.getChannelName();
         Channel channel = event.getChannel();
         String format = channel.getFormat();
-        format = format.replace("%color", channel.getColorCode());
-        format = format.replace("%ch", channel.getName());
-        format = format.replace("%prefix",member.getPrefix());
-        format = format.replace("%displayname", member.getDisplayName());
-        format = format.replace("%suffix", member.getSuffix());
+        ClickableFormat cf = ClickableFormat.makeFormat(format, member, channel, true);
+        format = cf.toLegacyText();
         format = format.replace("%msg", event.getMessage());
         format = ChatColor.translateAlternateColorCodes('&', format);
     
